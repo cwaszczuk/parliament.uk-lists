@@ -85,7 +85,13 @@ module Houses
     def a_to_z_current
       @house_id = params[:house_id]
 
-      @letters = Parliament::Utils::Helpers::RequestHelper.process_available_letters(@request)
+      @house, @people, @letters = Parliament::Utils::Helpers::RequestHelper.filter_response_data(
+        @request,
+        'http://id.ukpds.org/schema/House',
+        'http://id.ukpds.org/schema/Person',
+        ::Grom::Node::BLANK
+      )
+
       @all_path = :house_members_current_path
     end
   end
